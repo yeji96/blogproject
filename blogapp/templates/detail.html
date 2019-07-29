@@ -28,7 +28,7 @@
             <strong>{{comment.author}}</strong>
             <p>{{comment.text|linebreaks}}</p>
 
-            <form action="{% url 'edit_comment' blog.id comment.id %}" method="POST">
+            <form action="{% url 'edit_comment' comment.id %}" method="POST">
                 {% csrf_token %}
                 <input type="submit" value="수정하기">
             </form>

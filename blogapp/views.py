@@ -58,21 +58,20 @@ def add_comment(request, blog_id):
 def edit_comment(request, comment_id):
         comment = get_object_or_404(Comment, pk = comment_id)
         if request.method == 'POST':
-                form = CommentForm(request.POST)
+                form = CommentForm(request.POST, instance=comment)
                 if form.is_valid():
                         comment= form.save(commit = False)
-                        comment.blog = blog
                         comment.save()
-                        return redirect('/blog/' + str(comment.id))
+                        return redirect('home')
                 else :
-                        form = CommentForm(instance='author')
+                        form = CommentForm(instance=comment)
                 return render(request, 'add_comment.html', {'form':form})
 
 
-def delete_comment(request, comment_id, blog_id):
-    comment_detail = get_object_or_404(Comment, pk=comment_id)
-    comment_detail.delete()
-    return redirect('/blog/'+str(blog.id))
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    comment.delete()
+    return redirect('home')
 
 def new(request):
         return render(request,'new.html')
